@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join the Teardown — Team Signup</title>
+<meta name="description" content="Register for this week's Marketing Teardown project. Tell us your name, number and skill levels so teams can be built fairly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1030;
+    --ink-2:#2A1B4D;
+    --violet:#6436E0;
+    --magenta:#EC3B7E;
+    --tint:#F5F2FD;
+    --line:#E0D9F2;
+    --body:#3A3350;
+    --muted:#6F6890;
+    --white:#fff;
+    --ok:#1F9254;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+    color:var(--body);
+    background:var(--ink);
+    font-size:16px;
+    line-height:1.55;
+  }
+  h1,h2,h3,.display{font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.05;margin:0}
+
+  .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);min-height:100vh}
+
+  /* ---------- left: the brief ---------- */
+  .brief{
+    background:
+      radial-gradient(90% 60% at 10% 0%, rgba(100,54,224,.55) 0%, rgba(100,54,224,0) 60%),
+      radial-gradient(70% 50% at 100% 100%, rgba(236,59,126,.35) 0%, rgba(236,59,126,0) 65%),
+      var(--ink);
+    color:#fff;
+    padding:56px 52px;
+    display:flex;flex-direction:column;justify-content:center;gap:34px;
+    position:sticky;top:0;align-self:start;height:100vh;overflow:auto;
+  }
+  .brief h1{font-size:clamp(34px,3.6vw,52px);color:#fff}
+  .brief h1 em{font-style:normal;display:block;color:#C9B6FF}
+  .lede{font-size:17px;color:#D6CEF0;max-width:40ch;margin:0}
+
+  .facts{list-style:none;margin:0;padding:0;display:grid;gap:0;max-width:44ch}
+  .facts li{
+    display:grid;grid-template-columns:86px 1fr;gap:16px;align-items:baseline;
+    padding:13px 0;border-top:1px solid rgba(255,255,255,.14);
+  }
+  .facts li:last-child{border-bottom:1px solid rgba(255,255,255,.14)}
+  .facts dt,.facts b{font-weight:600;color:#A997E8;font-size:13px}
+  .facts span{color:#EDE9F8;font-size:14.5px}
+
+  .note{font-size:13.5px;color:#9C92C0;max-width:40ch;margin:0}
+
+  /* ---------- right: the form ---------- */
+  .panel{background:var(--white);padding:56px 52px;display:flex;align-items:center}
+  .form-shell{width:100%;max-width:520px;margin:0 auto}
+
+  .panel h2{font-size:26px;color:var(--ink);margin-bottom:6px}
+  .sub{font-size:14.5px;color:var(--muted);margin:0 0 30px}
+
+  .field{margin-bottom:20px}
+  .field label{display:block;font-weight:600;font-size:14px;color:var(--ink);margin-bottom:7px}
+  .field .hint{font-weight:400;color:var(--muted)}
+  input[type=text],input[type=tel],input[type=url]{
+    width:100%;padding:12px 14px;font:inherit;font-size:15px;color:var(--ink);
+    background:var(--white);border:1.5px solid var(--line);border-radius:9px;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  input::placeholder{color:#A8A2BF}
+  input:hover{border-color:#C8BCEC}
+  input:focus-visible{outline:none;border-color:var(--violet);box-shadow:0 0 0 3px rgba(100,54,224,.18)}
+
+  .skills{border:0;padding:0;margin:34px 0 8px}
+  .skills legend{padding:0;font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:700;font-size:18px;color:var(--ink)}
+  .skills .sub{margin:6px 0 18px}
+
+  .row{
+    display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;
+    padding:11px 0;border-top:1px solid var(--line);
+  }
+  .row:last-of-type{border-bottom:1px solid var(--line)}
+  .row .name{font-size:14.5px;font-weight:500;color:var(--ink)}
+  .row .name small{display:block;font-weight:400;font-size:12.5px;color:var(--muted);margin-top:1px}
+
+  .seg{display:flex;background:var(--tint);border-radius:8px;padding:3px;gap:2px}
+  .seg input{position:absolute;opacity:0;width:1px;height:1px}
+  .seg label{
+    cursor:pointer;font-size:12.5px;font-weight:600;color:var(--muted);
+    padding:6px 11px;border-radius:6px;white-space:nowrap;
+    transition:background .15s,color .15s;
+  }
+  .seg label:hover{color:var(--ink)}
+  .seg input:checked + label{background:var(--violet);color:#fff}
+  .seg input:focus-visible + label{box-shadow:0 0 0 3px rgba(100,54,224,.3)}
+
+  .err{display:none;margin:14px 0 0;padding:11px 14px;border-radius:9px;background:#FDECF2;color:#A81B4B;font-size:13.5px}
+  .err.on{display:block}
+
+  /* invalid field */
+  input.bad{border-color:#E0416F;background:#FFF7F9}
+  input.bad:focus-visible{border-color:#E0416F;box-shadow:0 0 0 3px rgba(224,65,111,.2)}
+  .msg{display:none;margin-top:6px;font-size:12.5px;color:#C22B57;font-weight:500}
+  .msg.on{display:block}
+  .req{color:#E0416F;font-weight:700}
+
+  button{
+    margin-top:26px;width:100%;padding:15px 20px;border:0;border-radius:10px;cursor:pointer;
+    font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:700;font-size:16px;letter-spacing:-.01em;
+    color:#fff;background:var(--ink);transition:background .15s,transform .05s;
+  }
+  button:hover:not(:disabled){background:var(--violet)}
+  button:active:not(:disabled){transform:translateY(1px)}
+  button:disabled{background:#B9B2CF;cursor:default}
+  button:focus-visible{outline:3px solid rgba(100,54,224,.4);outline-offset:2px}
+
+  .fine{margin:14px 0 0;font-size:12.5px;color:var(--muted);text-align:center}
+
+  /* ---------- done state ---------- */
+  .done{display:none;text-align:left}
+  .done.on{display:block}
+  .tick{width:46px;height:46px;border-radius:50%;background:#E6F6EC;color:var(--ok);display:grid;place-items:center;font-size:23px;margin-bottom:18px}
+  .done h2{margin-bottom:10px}
+  .done p{font-size:15px;color:var(--body);margin:0 0 10px;max-width:44ch}
+
+  @media (max-width:900px){
+    .wrap{grid-template-columns:1fr}
+    .brief{position:static;height:auto;padding:46px 26px;gap:26px}
+    .panel{padding:40px 26px}
+    .facts li{grid-template-columns:78px 1fr;gap:12px}
+  }
+  @media (max-width:430px){
+    .row{grid-template-columns:1fr;gap:9px}
+    .seg{justify-content:space-between}
+    .seg label{flex:1;text-align:center;padding:7px 4px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ============ LEFT: THE BRIEF ============ -->
+  <aside class="brief">
+    <div>
+      <h1>Pick a brand.<em>Take it apart.</em></h1>
+    </div>
+    <p class="lede">This week you tear down a real brand's marketing and publish what you find on LinkedIn. Fill this in and you'll be placed in a team.</p>
+
+    <ul class="facts">
+      <li><b>Saturday</b><span>Fill in this form</span></li>
+      <li><b>Sunday</b><span>Briefing, and your team is revealed in class</span></li>
+      <li><b>Mon&ndash;Wed</b><span>Doubt Room is open each evening</span></li>
+      <li><b>Thursday</b><span>Publish your teardown and present it</span></li>
+    </ul>
+
+    <p class="note">Teams are built from your skill ratings, so every team gets a mix of strengths and nobody carries the whole thing alone. Rate yourself honestly.</p>
+  </aside>
+
+  <!-- ============ RIGHT: THE FORM ============ -->
+  <main class="panel">
+    <div class="form-shell">
+
+      <form id="signup" novalidate>
+        <h2>Sign up for this week</h2>
+        <p class="sub">Takes about a minute.</p>
+
+        <div class="field">
+          <label for="name">Full name <span class="req">*</span></label>
+          <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name"
+                 maxlength="60" required aria-describedby="nameMsg">
+          <p class="msg" id="nameMsg"></p>
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone number <span class="req">*</span></label>
+          <input type="tel" id="phone" name="phone" placeholder="10-digit mobile number" autocomplete="tel"
+                 inputmode="numeric" maxlength="15" required aria-describedby="phoneMsg">
+          <p class="msg" id="phoneMsg"></p>
+        </div>
+
+        <div class="field">
+          <label for="linkedin">LinkedIn profile <span class="hint">— optional</span></label>
+          <input type="url" id="linkedin" name="linkedin" placeholder="linkedin.com/in/yourname" autocomplete="url">
+        </div>
+
+        <fieldset class="skills">
+          <legend>Rate your skills</legend>
+          <p class="sub">Novice means you've barely touched it. Expert means you could teach it.</p>
+          <div id="skillRows"></div>
+        </fieldset>
+
+        <div class="err" id="err" role="alert"></div>
+
+        <button type="submit" id="btn">Send my details</button>
+        <p class="fine">Your details are only used to build this week's teams.</p>
+      </form>
+
+      <div class="done" id="done" role="status">
+        <div class="tick">&#10003;</div>
+        <h2>You're in.</h2>
+        <p>Your details are saved. Teams are announced in Sunday's class and posted in the group right after.</p>
+        <p>Before then: have a brand in mind you'd actually enjoy pulling apart.</p>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+/* ================================================================
+   1. PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL BELOW
+   ================================================================ */
+const ENDPOINT = "PASTE_YOUR_APPS_SCRIPT_URL_HERE";
+
+const SKILLS = [
+  { key: "copywriting", name: "Copywriting",        note: "Writing hooks, captions, ad copy" },
+  { key: "design",      name: "Design & visuals",   note: "Canva, layout, carousels" },
+  { key: "research",    name: "Research & analysis",note: "Digging into brands and data" },
+  { key: "metaads",     name: "Meta Ads",           note: "Ad Library, targeting, creatives" },
+  { key: "presenting",  name: "Presenting",         note: "Speaking, pitching, defending ideas" }
+];
+const LEVELS = ["Novice", "Intermediate", "Expert"];
+
+/* build the skill rows */
+const rows = document.getElementById("skillRows");
+rows.innerHTML = SKILLS.map(s => `
+  <div class="row">
+    <div class="name">${s.name}<small>${s.note}</small></div>
+    <div class="seg">
+      ${LEVELS.map((lv, i) => `
+        <input type="radio" name="${s.key}" id="${s.key}_${i}" value="${lv}">
+        <label for="${s.key}_${i}">${lv}</label>
+      `).join("")}
+    </div>
+  </div>
+`).join("");
+
+const form = document.getElementById("signup");
+const btn  = document.getElementById("btn");
+const err  = document.getElementById("err");
+
+function fail(msg){
+  err.textContent = msg;
+  err.classList.add("on");
+}
+
+function markBad(input, msgEl, text){
+  input.classList.add("bad");
+  msgEl.textContent = text;
+  msgEl.classList.add("on");
+}
+
+function clearBad(input, msgEl){
+  input.classList.remove("bad");
+  msgEl.classList.remove("on");
+}
+
+/* clear the warning as soon as they start fixing it */
+["name","phone"].forEach(id => {
+  const input = document.getElementById(id);
+  const msgEl = document.getElementById(id + "Msg");
+  input.addEventListener("input", () => clearBad(input, msgEl));
+});
+
+/* phone accepts digits, spaces, +, - and () only */
+form.phone.addEventListener("input", () => {
+  form.phone.value = form.phone.value.replace(/[^\d+\-() ]/g, "");
+});
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  err.classList.remove("on");
+
+  const nameEl  = form.name,  nameMsg  = document.getElementById("nameMsg");
+  const phoneEl = form.phone, phoneMsg = document.getElementById("phoneMsg");
+  clearBad(nameEl, nameMsg); clearBad(phoneEl, phoneMsg);
+
+  const name   = nameEl.value.trim().replace(/\s+/g, " ");
+  const phone  = phoneEl.value.trim();
+  const digits = phone.replace(/\D/g, "");
+  let firstBad = null;
+
+  /* name: at least 2 letters, and letters not just symbols or numbers */
+  if (!name)                                  { markBad(nameEl, nameMsg, "Your name is required."); firstBad = firstBad || nameEl; }
+  else if ((name.match(/[A-Za-z\u0900-\u097F]/g) || []).length < 2)
+                                              { markBad(nameEl, nameMsg, "Please enter your real name, not numbers or symbols."); firstBad = firstBad || nameEl; }
+
+  /* phone: 10 digits, or 11-13 with a country code */
+  if (!phone)                                 { markBad(phoneEl, phoneMsg, "Your phone number is required."); firstBad = firstBad || phoneEl; }
+  else if (digits.length < 10 || digits.length > 13)
+                                              { markBad(phoneEl, phoneMsg, "Enter a 10-digit mobile number."); firstBad = firstBad || phoneEl; }
+  else if (/^(\d)\1+$/.test(digits.slice(-10)))
+                                              { markBad(phoneEl, phoneMsg, "That doesn't look like a real number."); firstBad = firstBad || phoneEl; }
+
+  if (firstBad){
+    fail("Name and phone number are both required — we can't build teams without them.");
+    firstBad.focus();
+    firstBad.scrollIntoView({ block: "center", behavior: "smooth" });
+    return;
+  }
+
+  const missing = SKILLS.filter(s => !form.querySelector(`input[name="${s.key}"]:checked`));
+  if (missing.length) return fail(`Rate every skill — ${missing[0].name} is still blank.`);
+
+  const payload = new URLSearchParams();
+  payload.append("name", name);
+  payload.append("phone", phone);
+  payload.append("linkedin", form.linkedin.value.trim());
+  SKILLS.forEach(s => payload.append(s.key, form.querySelector(`input[name="${s.key}"]:checked`).value));
+  payload.append("submittedAt", new Date().toISOString());
+
+  btn.disabled = true;
+  btn.textContent = "Sending…";
+
+  try {
+    if (ENDPOINT.startsWith("PASTE_")) throw new Error("no endpoint");
+    await fetch(ENDPOINT, { method: "POST", mode: "no-cors", body: payload });
+    form.style.display = "none";
+    document.getElementById("done").classList.add("on");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch (e2) {
+    btn.disabled = false;
+    btn.textContent = "Send my details";
+    fail("That didn't send. Check your connection and try again, or message in the group.");
+  }
+});
+</script>
+</body>
+</html>
