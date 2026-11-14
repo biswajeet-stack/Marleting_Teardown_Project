@@ -323,8 +323,22 @@ form.addEventListener("submit", async (e) => {
   btn.disabled = true;
   btn.textContent = "Sending…";
 
+  /* Setup check — only you should ever see this one */
+  if (!ENDPOINT || ENDPOINT.startsWith("PASTE_")) {
+    btn.disabled = false;
+    btn.textContent = "Send my details";
+    console.error("[Setup] ENDPOINT is not set. Paste your Apps Script Web app URL into index.html.");
+    return fail("Setup not finished: the Google Sheet link is missing. (Teacher: paste your Apps Script URL into index.html.)");
+  }
+
+  if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec/.test(ENDPOINT)) {
+    btn.disabled = false;
+    btn.textContent = "Send my details";
+    console.error("[Setup] ENDPOINT doesn't look like an Apps Script /exec URL:", ENDPOINT);
+    return fail("Setup problem: that link isn't a valid Apps Script URL. It must end in /exec.");
+  }
+
   try {
-    if (ENDPOINT.startsWith("PASTE_")) throw new Error("no endpoint");
     await fetch(ENDPOINT, { method: "POST", mode: "no-cors", body: payload });
     form.style.display = "none";
     document.getElementById("done").classList.add("on");
@@ -332,6 +346,7 @@ form.addEventListener("submit", async (e) => {
   } catch (e2) {
     btn.disabled = false;
     btn.textContent = "Send my details";
+    console.error("[Send failed]", e2);
     fail("That didn't send. Check your connection and try again, or message in the group.");
   }
 });
